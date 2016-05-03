@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+function timeGreeting()
+{
+		 //Local Variables
+		 var timeNow; //Object reference to the computer's clock
+		 var hour; //Hour of the day
+		 var greeting; //Object reference to greeting heading
+		 var photo; //Object reference to image
+
+		 //Get the current day and time from the computer's clock
+		 timeNow = new Date();
+
+		 //Get the hour of the time
+		 hour = timeNow.getHours();
+
+		 //Get access to the greeting heading and image
+		 greeting = document.getElementById("welcomeMessage");
+		 photo = document.getElementById("welcomeImage"); 
+
+		 //Determine and display appropriate greeting and image
+		 if (hour < 5 || hour > 18) //Evening
+				 {
+				 //Set the heading text
+				 greeting.innerHTML = "Good evening, welcome to my page!";
+
+				 //Set the photo source, alt text, and title
+				 photo.src = "images/vhevening.jpg";
+				 photo.alt = "Evening photo of our sign and clubhouse.";
+				 photo.title = photo.alt;
+				 }
+				 else if (hour < 12) //Morning
+				 {
+				 //Set the heading text
+				 greeting.innerHTML = "Good morning, welcome to my page!";
+
+				 //Set the photo source, alt text, and title
+				 photo.src = "images/vhmorning.jpg";
+				 photo.alt = "Morning photo of our sign and clubhouse.";
+				 photo.title = photo.alt;
+				 }
+				 else //Afternoon
+				 {
+				 //Set the heading text
+				 greeting.innerHTML = "Good afternoon, welcome to my page!";
+
+				 //Set the photo source, alt text, and title
+				 photo.src = "images/vhafternoon.jpg";
+				 photo.alt = "Afternoon photo of our sign and clubhouse.";
+				 photo.title = photo.alt;
+				 }
+}
+</script>
+
+<style>
+body{
+font-family:Arial, Helvetica, sans-serif;
+font-size:medium;
+color:	#000;
+background-color: #888888;
+margin:auto;
+}
+
+#info{
+	margin:auto;
+}
+
+#welcomeMessage {
+	text-align:center;
+}
+#imageWrapper {
+	text-align:center;
+	
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Time Greeting Script Page</title>
+</head>
+
+	<body onload="timeGreeting();">
+		<h1 id="welcomeMessage">This greeting will change based on the time of day</h1>
+		<div id="imageWrapper"><img src="" alt"" title""  width="400" height="267" 
+		id="welcomeImage" /></div>
+
+
+	</body>
+</html>
