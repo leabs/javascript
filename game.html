@@ -1,0 +1,100 @@
+
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="script.js"></script>
+<style>
+.wrapper{
+    text-align: center;
+    width:97%;
+    margin:auto;
+}
+
+.go{   
+    margin-top:30px;
+}
+.selected{
+  background:red;
+}
+img{
+    max-height: 100%;
+    max-width: 100%;
+}
+button{
+    display:inline-block;
+    width:33%;
+    height:33%;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>ROCK - PAPER - SCISSORS</h1>
+    <button onClick='choose("rock")'><img src="images/rock.svg" /></button>
+    <button onClick='choose("paper")'><img src="images/paper.svg" /></button>
+    <button onClick='choose("scissors")'><img src="images/rock.svg" /></button><br>
+<div class="go">
+    <button onClick='compare(user, computerChoice)'>Go!</button>
+</div>
+    <p id="result"></p>
+
+</div><!--End Wrapper-->
+<script src="js/Jquery.js"></script>
+<script>
+    var user;
+    var choose = function(choice) {
+        user = choice;
+    }
+
+    var computerChoice = Math.random();
+    if (computerChoice < 0.34) {
+        computerChoice = "rock";
+    }
+    else if (computerChoice < 0.67) {
+        computerChoice = "paper";
+    }   
+    else {
+        computerChoice = "scissors";
+    }
+
+    var compare = function(choice1, choice2) {
+        if (choice1 === choice2) {
+            document.getElementById("result").innerHTML = "You tied!";
+        }
+        else if (choice1 === "rock") {
+            if (choice2 === "scissors") {
+                document.getElementById("result").innerHTML = "You Win!";
+            }
+            else {
+                document.getElementById("result").innerHTML = "You Lose!";
+            }
+        }
+        else if (choice1 === "paper") {
+            if (choice2 === "rock") {
+                document.getElementById("result").innerHTML = "You Win!";
+            }
+            else if (choice2 ==="scissors") {
+                document.getElementById("result").innerHTML = "You Lose!";
+            }
+        }
+        else if (choice1 === "scissors") {
+            if (choice2 === "rock") {
+                document.getElementById("result").innerHTML = "You Lose!";
+            }
+            else if (choice2 === "paper") {
+                document.getElementById("result").innerHTML = "You Win!";
+            }
+        }
+        else {
+            document.getElementById("result").innerHTML = "ERROR!";
+        }
+    }
+</script>
+<script>
+$('img').on('click', function(){
+    $('img').removeClass('selected');
+    $(this).addClass('selected');
+});
+</script>
+</body>
+</html>
