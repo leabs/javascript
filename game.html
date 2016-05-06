@@ -2,16 +2,19 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script type="text/javascript" src="script.js"></script>
 <style>
 .wrapper{
     text-align: center;
     width:97%;
     margin:auto;
+    background:#d9e1e8;
 }
 
 .go{   
     margin-top:30px;
+    backgounrd:#fbaec8;
+    width:100%;
+    cursor: pointer;
 }
 .selected{
   background:red;
@@ -20,75 +23,120 @@ img{
     max-height: 100%;
     max-width: 100%;
 }
-button{
+.iconz{
     display:inline-block;
     width:33%;
     height:33%;
+}
+html{
+    background:#2b90d9;
 }
 </style>
 </head>
 <body>
 <div class="wrapper">
     <h1>ROCK - PAPER - SCISSORS</h1>
-    <button onClick='choose("rock")'><img src="images/rock.svg" /></button>
-    <button onClick='choose("paper")'><img src="images/paper.svg" /></button>
-    <button onClick='choose("scissors")'><img src="images/rock.svg" /></button><br>
-<div class="go">
-    <button onClick='compare(user, computerChoice)'>Go!</button>
+    <button class="iconz" onClick='choose("rock")'><img src="images/rock.svg" /></button>
+    <button class="iconz" onClick='choose("paper")'><img src="images/paper.svg" /></button>
+    <button class="iconz" onClick='choose("scissors")'><img src="images/scissors.svg" /></button><br>
+<div onClick='compare(user, computerChoice)'class="go">
+    <h1>Go!</h1>
 </div>
     <p id="result"></p>
 
 </div><!--End Wrapper-->
 <script src="js/Jquery.js"></script>
 <script>
-    var user;
+
+// Compare function
+var compare = function(choice1, choice2)
+{
+    if(choice1 === choice2)
+    {
+        document.getElementById("result").innerHTML = '<img src="images/tie.jpg" />';
+        return 0;
+    }
+    else if(choice1 === "rock")
+    {
+        if(choice2 === "scissors")
+        {
+            //Rock beats scissors
+            document.getElementById("result").innerHTML = '<img src="images/yes.png" /><img src="images/rockwins.jpg" />';
+            return 1;
+        }
+        else
+        {
+            document.getElementById("result").innerHTML = '<img src="images/no.png" /><img src="images/paperwins.jpg" />';
+            return 0;
+        }
+    }
+    else if(choice1 === "paper")
+    {
+        if (choice2 === "rock")
+        {
+            document.getElementById("result").innerHTML = '<img src="images/yes.png" /><img src="images/rockwins.jpg" />';
+            return 1;
+        }
+        else
+        {
+            document.getElementById("result").innerHTML = '<img src="images/no.png" /><img src="images/scissorwins.jpg" />';
+            return 0;
+        }
+    }
+    else if (choice1 === "scissors")
+    {
+        if (choice2 === "rock")
+        {
+            document.getElementById("result").innerHTML = '<img src="images/no.png" /><img src="images/rockwins.jpg" />';
+            return 0;
+        }
+        else
+        {
+           document.getElementById("result").innerHTML = '<img src="images/yes.png" /><img src="images/scissorwins.jpg" />';
+            return 1;
+        }
+    }
+}
+var user;
     var choose = function(choice) {
         user = choice;
     }
 
+// Call getUserChoice
+var userChoice = getUserChoice();
+
+// Counter variable
+var counter = 0;
+
+// The new loop in question <---
+while(userChoice != "quit")
+{
+    // Get computer's choice
     var computerChoice = Math.random();
-    if (computerChoice < 0.34) {
+    if (computerChoice < 0.34)
+    {
         computerChoice = "rock";
     }
-    else if (computerChoice < 0.67) {
+    else if(computerChoice <= 0.67)
+    {
         computerChoice = "paper";
-    }   
-    else {
+    }
+    else
+    {
         computerChoice = "scissors";
     }
 
-    var compare = function(choice1, choice2) {
-        if (choice1 === choice2) {
-            document.getElementById("result").innerHTML = "You tied!";
-        }
-        else if (choice1 === "rock") {
-            if (choice2 === "scissors") {
-                document.getElementById("result").innerHTML = "You Win!";
-            }
-            else {
-                document.getElementById("result").innerHTML = "You Lose!";
-            }
-        }
-        else if (choice1 === "paper") {
-            if (choice2 === "rock") {
-                document.getElementById("result").innerHTML = "You Win!";
-            }
-            else if (choice2 ==="scissors") {
-                document.getElementById("result").innerHTML = "You Lose!";
-            }
-        }
-        else if (choice1 === "scissors") {
-            if (choice2 === "rock") {
-                document.getElementById("result").innerHTML = "You Lose!";
-            }
-            else if (choice2 === "paper") {
-                document.getElementById("result").innerHTML = "You Win!";
-            }
-        }
-        else {
-            document.getElementById("result").innerHTML = "ERROR!";
-        }
-    }
+    // Store result as the returned value of compare()
+    var result = compare(userChoice, computerChoice);
+    counter += result;
+
+    // Alert the user the current score (counter = number of wins)
+    alert("You have won " + counter + " times");
+    
+    userChoice = getUserChoice();
+}
+
+   
 </script>
 <script>
 $('img').on('click', function(){
