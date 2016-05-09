@@ -4,9 +4,7 @@
 
 <meta charset="utf-8">
 
-<script>
-$('.iconz > a').bind('tap', toggleSubMenu);
-</script>
+
 
 <style>
 @font-face {
@@ -16,6 +14,7 @@ $('.iconz > a').bind('tap', toggleSubMenu);
 body{
     padding-top:0;
     margin-top:0;
+  
 }
 
 .wrapper{
@@ -24,6 +23,7 @@ body{
     margin:auto;
     background:#fff;
     padding-bottom:10px;
+ 
 }
 h1{
     font-family: myFont;
@@ -57,15 +57,17 @@ background: -moz-linear-gradient(top, rgba(208,228,247,1) 0%, rgba(115,177,231,1
 background: -webkit-linear-gradient(top, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* Chrome10-25,Safari5.1-6 */
 background: linear-gradient(to bottom, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#87bcea',GradientType=0 ); /* IE6-9 */
-cursor: pointer;
+
 }
 html{
     background:#3BAFDA;
     color:#222;
+    
 }
 .wrapItUp{
    text-align: center;
     margin:auto;
+  
 
 }
 #result{
@@ -79,18 +81,19 @@ p{
     font-weight: 1000;
     color:darkred;
 }
-.choice{
-    cursor: pointer;
-}
+
+
+.clickable { cursor: pointer; }
+
 </style>
 </head>
 <body>
 <div class="wrapper">
     <h1>ROCK  PAPER  SCISSORS</h1>
     <div class="wrapItUp">
-    <button name="rock" class="choice iconz"><h1>Rock</h1></button>
-<button name="paper" class="choice iconz"><h1>Paper</h1></button>
-<button name="scissors" class="choice iconz"><h1>Scissors</h1></button>
+    <button name="rock" class="choice iconz"><h1 class="clickable">Rock</h1></button>
+<button name="paper" class="choice iconz"><h1 class="clickable">Paper</h1></button>
+<button name="scissors" class="choice iconz"><h1 class="clickable">Scissors</h1></button>
 <p>Computer choice: <span class="computer-choice"> </span</p>
 <p>Player choice: <span class="player-choice"> </span></p>
 <p>Winner: <span class="winner"> </span></p>
