@@ -1,19 +1,44 @@
 
 <html>
 <head>
+
 <meta charset="utf-8">
+
+<script>
+$('.iconz > a').bind('tap', toggleSubMenu);
+</script>
+
 <style>
+@font-face {
+    font-family: myFont;
+    src: url(fonts/SignikaNegative-Bold.ttf);
+    }
+body{
+    padding-top:0;
+    margin-top:0;
+}
+
 .wrapper{
-    text-align: center;
-    width:97%;
+    
+    width:98%;
     margin:auto;
-    background:#d9e1e8;
+    background:#fff;
+    padding-bottom:10px;
+}
+h1{
+    font-family: myFont;
+    letter-spacing: .1em;
+    font-size: 3em;
+    max-width:100%;
+    margin-top:0;
+    padding-top:0;
+    text-align: center;
 }
 
 .go{   
-    margin-top:30px;
-    backgounrd:#fbaec8;
-    width:100%;
+    margin:auto;
+    background:#fff;
+    width:60%;
     cursor: pointer;
 }
 .selected{
@@ -24,125 +49,139 @@ img{
     max-width: 100%;
 }
 .iconz{
-    display:inline-block;
-    width:33%;
-    height:33%;
+    
+    width:32.2%;
+    height:auto%;
+   background: rgb(208,228,247); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(208,228,247,1) 0%, rgba(115,177,231,1) 24%, rgba(10,119,213,1) 50%, rgba(83,159,225,1) 79%, rgba(135,188,234,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#87bcea',GradientType=0 ); /* IE6-9 */
+cursor: pointer;
 }
 html{
-    background:#2b90d9;
+    background:#3BAFDA;
+    color:#222;
+}
+.wrapItUp{
+   text-align: center;
+    margin:auto;
+
+}
+#result{
+    text-align: center;
+}
+p{
+    font-family: myFont;
+    font-size: 1.5em;
+}
+.winner{
+    font-weight: 1000;
+    color:darkred;
+}
+.choice{
+    cursor: pointer;
 }
 </style>
 </head>
 <body>
 <div class="wrapper">
-    <h1>ROCK - PAPER - SCISSORS</h1>
-    <button class="iconz" onClick='choose("rock")'><img src="images/rock.svg" /></button>
-    <button class="iconz" onClick='choose("paper")'><img src="images/paper.svg" /></button>
-    <button class="iconz" onClick='choose("scissors")'><img src="images/scissors.svg" /></button><br>
-<div onClick='compare(user, computerChoice)'class="go">
-    <h1>Go!</h1>
+    <h1>ROCK  PAPER  SCISSORS</h1>
+    <div class="wrapItUp">
+    <button name="rock" class="choice iconz"><h1>Rock</h1></button>
+<button name="paper" class="choice iconz"><h1>Paper</h1></button>
+<button name="scissors" class="choice iconz"><h1>Scissors</h1></button>
+<p>Computer choice: <span class="computer-choice"> </span</p>
+<p>Player choice: <span class="player-choice"> </span></p>
+<p>Winner: <span class="winner"> </span></p>
+
 </div>
-    <p id="result"></p>
+    
 
 </div><!--End Wrapper-->
 <script src="js/Jquery.js"></script>
 <script>
 
-// Compare function
-var compare = function(choice1, choice2)
-{
-    if(choice1 === choice2)
-    {
-        document.getElementById("result").innerHTML = '<img src="images/tie.jpg" />';
-        return 0;
-    }
-    else if(choice1 === "rock")
-    {
-        if(choice2 === "scissors")
-        {
-            //Rock beats scissors
-            document.getElementById("result").innerHTML = '<img src="images/yes.png" /><img src="images/rockwins.jpg" />';
-            return 1;
-        }
-        else
-        {
-            document.getElementById("result").innerHTML = '<img src="images/no.png" /><img src="images/paperwins.jpg" />';
-            return 0;
-        }
-    }
-    else if(choice1 === "paper")
-    {
-        if (choice2 === "rock")
-        {
-            document.getElementById("result").innerHTML = '<img src="images/yes.png" /><img src="images/rockwins.jpg" />';
-            return 1;
-        }
-        else
-        {
-            document.getElementById("result").innerHTML = '<img src="images/no.png" /><img src="images/scissorwins.jpg" />';
-            return 0;
-        }
-    }
-    else if (choice1 === "scissors")
-    {
-        if (choice2 === "rock")
-        {
-            document.getElementById("result").innerHTML = '<img src="images/no.png" /><img src="images/rockwins.jpg" />';
-            return 0;
-        }
-        else
-        {
-           document.getElementById("result").innerHTML = '<img src="images/yes.png" /><img src="images/scissorwins.jpg" />';
-            return 1;
-        }
-    }
-}
-var user;
-    var choose = function(choice) {
-        user = choice;
-    }
+const defaultRules = {
+  // If choice 1 is rock...
+  rock: {
+    // ...and choice 2 is scissors, rock wins (true)
+    scissors: true,
+    paper: false
+  },
+  paper: {
+    rock: true,
+    scissors: false
+  },
+  scissors: {
+    paper: true,
+    rock: false
+  }
+};
 
-// Call getUserChoice
-var userChoice = getUserChoice();
+function compare(choice1, choice2, rules = defaultRules) {
+  // Make sure our rule set has both of our choices
+  if (!rules.hasOwnProperty(choice1) || !rules.hasOwnProperty(choice2)) {
+    throw new Error('invalid choice');
+  }
 
-// Counter variable
-var counter = 0;
-
-// The new loop in question <---
-while(userChoice != "quit")
-{
-    // Get computer's choice
-    var computerChoice = Math.random();
-    if (computerChoice < 0.34)
-    {
-        computerChoice = "rock";
-    }
-    else if(computerChoice <= 0.67)
-    {
-        computerChoice = "paper";
-    }
-    else
-    {
-        computerChoice = "scissors";
-    }
-
-    // Store result as the returned value of compare()
-    var result = compare(userChoice, computerChoice);
-    counter += result;
-
-    // Alert the user the current score (counter = number of wins)
-    alert("You have won " + counter + " times");
-    
-    userChoice = getUserChoice();
+  if (choice1 === choice2) {
+    return 'tie';
+  } else {
+    // Since the result doesn't actually have any meaning as a floating
+    // point number, a string is preferred.
+    return rules[choice1][choice2] ? '1' : '2';
+    // The `?` and `:` syntax is just a shorter way to write:
+    // if (rules[choice1][choice2]) {
+    //   return '1';
+    // } else {
+    //   return '2';
+    // }
+  }
 }
 
-   
-</script>
-<script>
-$('img').on('click', function(){
-    $('img').removeClass('selected');
-    $(this).addClass('selected');
+function randomChoice(rules = defaultRules) {
+  // Get an array of all the options for this rule set
+  const options = Object.keys(rules);
+
+  // Select a random value from `options`
+  return options[Math.floor(Math.random() * options.length)];
+}
+
+const computerChoiceDisplay = document.querySelector('.computer-choice');
+const playerChoiceDisplay = document.querySelector('.player-choice');
+const winnerDisplay = document.querySelector('.winner');
+
+// Due to the DOM being shitty, document.querySelectorAll returns a NodeList
+// This needs to be converted to an array to loop over it with .forEach()
+Array.from(document.querySelectorAll('.choice')).forEach(button => {
+  // We add a listener on each of the 3 choice buttons.
+  button.addEventListener('click', event => {
+    const computerChoice = randomChoice();
+    const playerChoice = event.target.name;
+
+    // Use textContent instead of innerHTML
+    computerChoiceDisplay.textContent = computerChoice;
+    playerChoiceDisplay.textContent = playerChoice;
+
+    // This value will be either '1', '2', or 'tie'
+    const winner = compare(computerChoice, playerChoice);
+
+    // Brackets can be put right after an object to quickly map one value
+    // to another
+    winnerDisplay.textContent = {
+      1: 'Computer ', 2: 'You!', tie: 'Tie'
+    }[winner];
+
+    // Here's another way to write the above:
+    // if (winner === '1') winnerDisplay.textContent = 'computer';
+    // else if (winner === '2') winnerDisplay.textContent = 'player';
+    // else if (winner === 'tie') winnerDisplay.textContent = 'tie';
+  });
 });
 </script>
+
+
+
 </body>
 </html>
